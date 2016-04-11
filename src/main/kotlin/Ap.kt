@@ -4,7 +4,7 @@ import domain.processing.services.TaskService
 import neo4j.utils.Neo4jSessionFactory
 
 /**
- * Created by batman on 09/04/2016.
+ * Created by Christian Sperandio on 09/04/2016.
  *
  */
 

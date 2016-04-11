@@ -5,7 +5,7 @@ import org.neo4j.ogm.session.SessionFactory
 
 /**
  * The util singleton manages the Neo4J session.
- * Created by batman on 09/04/2016.
+ * Created by Christian Sperandio on 09/04/2016.
  *
  */
 object Neo4jSessionFactory  {

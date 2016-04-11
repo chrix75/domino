@@ -1,11 +1,10 @@
 package domain.global.services
 
 import domain.global.entities.Entity
-import neo4j.utils.Neo4jSessionFactory
 import org.neo4j.ogm.session.Session
 
 /**
- * Created by batman on 09/04/2016.
+ * Created by Christian Sperandio on 09/04/2016.
  *
  */
 abstract class GenericCRUD<T: Entity>(protected val session: Session) {

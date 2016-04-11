@@ -12,7 +12,7 @@ import org.neo4j.ogm.annotation.Transient
 /**
  * The Task class is the entity representation of a task.
  *
- * Created by batman on 09/04/2016.
+ * Created by Christian Sperandio on 09/04/2016.
  *
  */
 @NodeEntity

@@ -4,7 +4,7 @@ import domain.global.errors.Error
 import domain.processing.entities.Task
 
 /**
- * Created by batman on 10/04/2016.
+ * Created by Christian Sperandio on 10/04/2016.
  *
  */
 class TaskValidator: EntityValidator<Task> {

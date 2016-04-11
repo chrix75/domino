@@ -3,7 +3,7 @@ package domain.global.validators
 import domain.global.errors.Error
 
 /**
- * Created by batman on 10/04/2016.
+ * Created by Christian Sperandio on 10/04/2016.
  *
  */
 interface EntityValidator<T> {

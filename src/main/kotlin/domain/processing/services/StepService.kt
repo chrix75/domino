@@ -6,7 +6,7 @@ import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
 
 /**
- * Created by batman on 10/04/2016.
+ * Created by Christian Sperandio on 10/04/2016.
  *
  */
 class StepService(session: Session) : GenericCRUD<Step>(session) {

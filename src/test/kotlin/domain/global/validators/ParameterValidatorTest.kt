@@ -4,7 +4,7 @@ import domain.processing.entities.Parameter
 import org.junit.Assert.*
 
 /**
- * Created by batman on 10/04/2016.
+ * Created by Christian Sperandio on 10/04/2016.
  */
 class ParameterValidatorTest {
     @org.junit.Test
