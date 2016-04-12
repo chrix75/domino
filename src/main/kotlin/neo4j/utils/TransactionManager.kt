@@ -13,6 +13,11 @@ class TransactionManager(val session: Session) {
     private var tx: Transaction? = null
     private var createdTransaction = false
 
+    /**
+     * Begins a new Neo4J transaction.
+     *
+     * If a session is created already, it is used.
+     */
     fun beginTransaction() {
         tx = session.transaction
 

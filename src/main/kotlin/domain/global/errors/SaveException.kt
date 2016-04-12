@@ -1,5 +1,7 @@
 package domain.global.errors
 
+import domain.global.validators.Error
+
 /**
  * Created by Christian Sperandio on 09/04/2016.
  *

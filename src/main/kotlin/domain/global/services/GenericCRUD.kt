@@ -4,6 +4,8 @@ import domain.global.entities.Entity
 import org.neo4j.ogm.session.Session
 
 /**
+ * The generic CRUD service.
+ *
  * Created by Christian Sperandio on 09/04/2016.
  *
  */

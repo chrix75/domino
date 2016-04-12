@@ -6,6 +6,10 @@ import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
 
 /**
+ * The class StepService manages the step persistence.
+ *
+ * @constructor session The Neo4J session used by this service.
+ *
  * Created by Christian Sperandio on 10/04/2016.
  *
  */

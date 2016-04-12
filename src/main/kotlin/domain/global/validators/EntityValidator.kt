@@ -1,8 +1,10 @@
 package domain.global.validators
 
-import domain.global.errors.Error
+import domain.global.validators.Error
 
 /**
+ * Interface implemented by all entity validators.
+ *
  * Created by Christian Sperandio on 10/04/2016.
  *
  */
