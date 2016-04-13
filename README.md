@@ -54,7 +54,10 @@ But this cost is reduced thanks to usage of Neo4J DB.
 
 ## Who is behind the domino project?
 
-**TODO: WRITE MY PROFILE**
+I'm a French software architect and developer for more 15 years. I started with C/C++ and now I often develop with JVM
+languages as Java8 or Kotlin and I tried others as Groovy, Clojure. I like the functional paradigm (I discovered it
+with Clojure and Haskell) and I try to find the best compromise between functional and object programming. For me,
+ nothing is bad: we have to use the best tool for a problem.
 
 ## So? 
 
