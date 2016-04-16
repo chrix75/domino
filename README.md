@@ -24,7 +24,8 @@ Currently, the domino project is built on:
 
 * Kotlin (a JVM language) http://kotlinlang.org/
 * Neo4J graph database http://neo4j.com/
-* Linux or OS X OS 
+* Linux or OS X OS
+* Bash scripts or Python
 
 #### About the choice of the Neo4J database
 
