@@ -5,12 +5,13 @@ import domain.processing.entities.Parameter
 import domain.processing.entities.Step
 import domain.processing.entities.Task
 import neo4j.utils.Neo4jSessionFactory
+import org.junit.After
 import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
-import org.neo4j.ogm.session.Neo4jSession
 import org.neo4j.ogm.session.Session
+import java.util.*
 
 /**
  * Created by Christian Sperandio on 10/04/2016.
@@ -21,6 +22,11 @@ class TaskServiceTest {
     @Before
     fun setUp() {
         session = Neo4jSessionFactory.getNeo4jSession()
+    }
+
+    @After
+    fun tearDown() {
+        session.clear()
     }
 
     @Test
@@ -63,33 +69,42 @@ class TaskServiceTest {
     @Test
     fun failTaskCreationFromTemplate() {
         val taskService = TaskService(session)
-        val templates = taskService.findAll(Task::class.java).filter { it.name == "TU - 627B7892-8614-4C01-A4DE-FD86A0253E25 - Matching keys" }
-
-        if (templates.size == 0) {
-            fail("Test template not found")
-        }
 
         try {
-            taskService.saveFromTemplate(templates[0])
-            fail("The system must not accept 2 task with the same name.")
-        } catch(e: SaveException) {}
+            val template = taskService.findByTemplateUUID("5b922e85-8695-4cae-9ac6-1f7346f3426a")
+            assertNotNull(template)
+
+            val id = taskService.saveFromTemplate(template!!)
+            assertNull(id)
+        } catch(e: SaveException) {
+        }
+    }
+    /**
+     * In this test below, the task creation fails the template UUID is not found
+     */
+    @Test
+    fun failTaskCreationFromUnknownTemplate() {
+        val taskService = TaskService(session)
+
+        try {
+            val template = taskService.findByTemplateUUID("unknown template")
+            assertNull(template)
+        } catch(e: SaveException) {
+        }
     }
 
     @Test
     fun successTaskCreationFromTemplate() {
         val taskService = TaskService(session)
-        val templates = taskService.findAll(Task::class.java).filter { it.name == "TU - 627B7892-8614-4C01-A4DE-FD86A0253E25 - Matching keys" }
-
-        if (templates.size == 0) {
-            fail("Test template not found")
-        }
 
         try {
-            val newTask = templates[0]
-            newTask.name = "TU - 627B7892-8614-4C01-A4DE-FD86A0253E25 - Matching keys REAL TASK"
-            taskService.saveFromTemplate(newTask)
+            val template = taskService.findByTemplateUUID("5b922e85-8695-4cae-9ac6-1f7346f3426a")
+            assertNotNull(template)
 
-            taskService.delete(newTask)
+            template?.name = template?.name + " [" + UUID.randomUUID() + "]"
+            val id = taskService.saveFromTemplate(template!!)
+
+            assertNotNull(id)
         } catch(e: SaveException) {
             fail("The system must not accept 2 task with the same name.")
         }
