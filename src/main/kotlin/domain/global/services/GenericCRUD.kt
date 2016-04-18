@@ -10,7 +10,7 @@ import org.neo4j.ogm.session.Session
  *
  */
 abstract class GenericCRUD<T: Entity>(protected val session: Session) {
-    enum class FETCH_TYPE(val type: Int) { EAGER(-1), LAZY(0) }
+    enum class FETCH_TYPE(val type: Int) { EAGER(-1), LAZY(1) }
 
     abstract fun getEntityClass(): Class<T>
 

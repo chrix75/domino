@@ -5,6 +5,7 @@ import domain.processing.entities.Task
 import domain.global.services.GenericCRUD
 import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
+import java.util.*
 
 /**
  * The TaskService class manages the tasks persistence.
@@ -26,7 +27,7 @@ class TaskService(session: Session): GenericCRUD<Task>(session) {
      *
      * @throws SaveException
      */
-    fun save(task: Task) {
+    fun save(task: Task): Long? {
         val validation = domain.global.validators.validate(task)
 
         if (validation.hasError) {
@@ -35,6 +36,7 @@ class TaskService(session: Session): GenericCRUD<Task>(session) {
 
         try {
             super.save(task, FETCH_TYPE.EAGER)
+            return task.id
         } catch (e: Exception) {
             throw SaveException("Failure while task save for $task", e, validation.errors)
         }
@@ -47,9 +49,24 @@ class TaskService(session: Session): GenericCRUD<Task>(session) {
      *
      * @throws SaveException
      */
-    fun saveFromTemplate(template: Task) {
+    fun saveFromTemplate(template: Task): Long? {
         template.resetId()
-        save(template)
+        return save(template)
+    }
+
+    fun findByTemplateUUID(templateUUID: String): Task? {
+        val templateResults = session.query(Task::class.java,
+                "match p=(t:Task {uuid: {uuid}})-[*]->() return t, nodes(p), rels(p)",
+                mapOf("uuid" to templateUUID)).iterator()
+
+        if (templateResults.hasNext()) {
+            val template = templateResults.next()
+
+            template.resetId()
+            return template
+        }
+
+        return null
     }
 
     /**

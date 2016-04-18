@@ -5,6 +5,7 @@ import domain.global.validators.EntityValidator
 import domain.global.validators.ParameterValidator
 import domain.global.validators.Validable
 import org.neo4j.ogm.annotation.NodeEntity
+import org.neo4j.ogm.annotation.Relationship
 
 /**
  * The parameter entity.
@@ -15,6 +16,9 @@ import org.neo4j.ogm.annotation.NodeEntity
 @NodeEntity
 class Parameter(_name: String = "") : NamedEntity(_name), Validable<Parameter> {
     var value: String = ""
+
+    @Relationship(type = "INITIALIZES")
+    var parameters: Set<Parameter> = setOf()
 
     /**
      * Returns an instance of the validator checks if a parameter is valid before saving into the DB.
