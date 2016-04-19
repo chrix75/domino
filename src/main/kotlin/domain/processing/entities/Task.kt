@@ -21,12 +21,6 @@ import org.neo4j.ogm.annotation.Transient
 @NodeEntity
 class Task(_name: String = "") : NamedEntity(_name), Validable<Task> {
 
-    @Relationship(type = "HAS_STEP")
-    private var _steps = mutableSetOf<Step>()
-
-    @Relationship(type = "HAS_PARAMETER")
-    private var _parameters = mutableSetOf<Parameter>()
-
     @Property
     var description = ""
         set(value) {}
@@ -34,21 +28,12 @@ class Task(_name: String = "") : NamedEntity(_name), Validable<Task> {
     @Property
     var state = RunningState.TO_CONFIGURE
 
-    @Transient
-    var parameters = setOf<Parameter>()
-        get() = _parameters
-        set(value) {
-            _parameters = value.toMutableSet()
-            field = _parameters
-        }
 
-    @Transient
+    @Relationship(type = "HAS_PARAMETER")
+    var parameters = setOf<Parameter>()
+
+    @Relationship(type = "HAS_STEP")
     var steps = setOf<Step>()
-        get() = this._steps
-        set(value) {
-            _steps = value.toMutableSet()
-            field = _steps
-        }
 
     override fun toString(): String {
         return "Task $id [$name] \"$description\""

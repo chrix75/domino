@@ -20,31 +20,15 @@ import org.neo4j.ogm.annotation.Transient
 @NodeEntity
 class Step(_name: String = "") : NamedEntity(_name), Validable<Step> {
 
-    @Relationship(type = "HAS_STEP")
-    private var _steps = mutableSetOf<Step>()
-
-    @Relationship(type = "HAS_PARAMETER")
-    private var _parameters = mutableSetOf<Parameter>()
 
     @Property
     var state = RunningState.TO_CONFIGURE
 
-    @Transient
+    @Relationship(type = "HAS_STEP")
     var steps = setOf<Step>()
-        get() = _steps
-        set(value) {
-            _steps = value.toMutableSet()
-            field = _steps
-        }
 
-
-    @Transient
+    @Relationship(type = "HAS_PARAMETER")
     var parameters = setOf<Parameter>()
-        get() = _parameters
-        set(value) {
-            _parameters = value.toMutableSet()
-            field = _parameters
-        }
 
     /**
      * Returns an instance of the validator checks the validity of the step before saving into the DB.
