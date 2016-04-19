@@ -1,0 +1,25 @@
+// Template for the "Number a file" task.
+// This task takes an input file and adds a record id field at the end of each record.
+
+create (task:Task:Template {uuid: $uuid, name: "Number file records", description: "Add a record id to each record"})
+create (step:Step:Template {uuid: $uuid, name: "Adding record id field", description: "Add a record id to each record"})
+create (param1Task:Parameter:Template {uuid: $uuid, name: "inputFile", description: "The path of the file to process"})
+create (param2Task:Parameter:Template {uuid: $uuid, name: "outputFile", description: "The path of the result file"})
+create (param3Task:Parameter:Template {uuid: $uuid, name: "algorithm", description: "Algorithm name computes the record ID"})
+create (param1Step:Parameter:Template {uuid: $uuid, name: "inputFile", description: "The path of the file to process"})
+create (param2Step:Parameter:Template {uuid: $uuid, name: "outputFile", description: "The path of the result file"})
+create (param3Step:Parameter:Template {uuid: $uuid, name: "algorithm", description: "Algorithm name computes the record ID"})
+merge (task)-[:HASSTEP]->(step)
+merge (task)-[:HAS_PARAMETER]->(param1Task)
+merge (task)-[:HAS_PARAMETER]->(param2Task)
+merge (task)-[:HAS_PARAMETER]->(param3Task)
+merge (step)-[:HAS_PARAMETER]->(param1Step)
+merge (step)-[:HAS_PARAMETER]->(param2Step)
+merge (step)-[:HAS_PARAMETER]->(param3Step)
+merge (param1Task)-[:INITIALIZES]->(param1Step)
+merge (param2Task)-[:INITIALIZES]->(param2Step)
+merge (param3Task)-[:INITIALIZES]->(param3Step);
+
+
+
+

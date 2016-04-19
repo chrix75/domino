@@ -1,0 +1,84 @@
+// This task searches the duplicated keys between 2 files.
+
+merge (task:Task:Template { name: "Duplicate keys", description: "Search records in two files with common keys", uuid: $uuid } )
+merge (file1Param:Parameter:Template {name: "firstInputFilename", description: "Path of the first input file", uuid: $uuid}) 
+merge (file2Param:Parameter:Template {name: "secondInputFilename", description: "Path of the second input file", uuid: $uuid}) 
+merge (keys1Param:Parameter:Template {name: "firstKeys", description: "Keys of the first input file", uuid: $uuid})
+merge (keys2Param:Parameter:Template {name: "secondKeys", description: "Keys of the second input file", uuid: $uuid})
+merge (duplicatesFirstFileParam:Parameter:Template {name: "duplicatesFirstFile", description: "Filepath with the duplicated records from the first file", uuid: $uuid})
+merge (duplicatesSecondFileParam:Parameter:Template {name: "duplicatesSecondFile", description: "Filepath with the duplicated records from the second file", uuid: $uuid})
+merge (uniquesFirstFileParam:Parameter:Template {name: "uniquesFirstFile", description: "Filepath with the unique records from the first file", uuid: $uuid})
+merge (uniquesSecondFileParam:Parameter:Template {name: "uniquesSecondFile", description: "Filepath with the unique records from the second file", uuid: $uuid})
+
+merge (task)-[:HAS_PARAMETER]->(file1Param)
+merge (task)-[:HAS_PARAMETER]->(file2Param)
+merge (task)-[:HAS_PARAMETER]->(keys1Param)
+merge (task)-[:HAS_PARAMETER]->(keys2Param)
+merge (task)-[:HAS_PARAMETER]->(duplicatesFirstFileParam)
+merge (task)-[:HAS_PARAMETER]->(uniquesFirstFileParam)
+merge (task)-[:HAS_PARAMETER]->(duplicatesSecondFileParam)
+merge (task)-[:HAS_PARAMETER]->(uniquesSecondFileParam)
+
+merge (sort1:Step:Template {name: "Sorting the first file", description: "Sort the first file", uuid: $uuid})
+merge (inputFileSort1:Parameter:Template {name: "inputFile", uuid: $uuid})
+merge (outputFileSort1:Parameter:Template {name: "sortedFile", uuid: $uuid})
+merge (keysSort1:Parameter:Template {name: "sortingKeys", uuid: $uuid})
+
+merge (sort1)-[:HAS_PARAMETER]->(inputFileSort1)
+merge (sort1)-[:HAS_PARAMETER]->(outputFileSort1)
+merge (sort1)-[:HAS_PARAMETER]->(keysSort1)
+
+merge (sort2:Step:Template {name: "Sorting the second file", description: "Sort the second file", uuid: $uuid})
+merge (inputFileSort2:Parameter:Template {name: "inputFile", uuid: $uuid})
+merge (outputFileSort2:Parameter:Template {name: "sortedFile", uuid: $uuid})
+merge (keysSort2:Parameter:Template {name: "sortingKeys", uuid: $uuid})
+
+merge (sort2)-[:HAS_PARAMETER]->(inputFileSort2)
+merge (sort2)-[:HAS_PARAMETER]->(outputFileSort2)
+merge (sort2)-[:HAS_PARAMETER]->(keysSort2)
+
+merge (search:Step:Template {name: "Searching duplicates", description: "Search the duplicates between files", uuid: $uuid})
+merge (firstInputSearch:Parameter:Template {name: "firstInputFile" , uuid: $uuid})
+merge (secondInputSearch:Parameter:Template {name: "secondInputFile", uuid: $uuid})
+merge (firstKeysSearch:Parameter:Template {name: "firstKeys", uuid: $uuid})
+merge (secondKeysSearch:Parameter:Template {name: "secondKeys", uuid: $uuid})
+merge (duplicatesFirstFileSearch:Parameter:Template {name: "firstDuplicatesFile", uuid: $uuid})
+merge (uniquesFirstFileSearch:Parameter:Template {name: "firstUniquesFile", uuid: $uuid})
+merge (duplicatesSecondFileSearch:Parameter:Template {name: "secondDuplicatesFile", uuid: $uuid})
+merge (uniquesSecondFileSearch:Parameter:Template {name: "secondUniquesFile", uuid: $uuid})
+
+merge (search)-[:HAS_PARAMETER]->(firstInputSearch)
+merge (search)-[:HAS_PARAMETER]->(secondInputSearch)
+merge (search)-[:HAS_PARAMETER]->(firstKeysSearch)
+merge (search)-[:HAS_PARAMETER]->(secondKeysSearch)
+merge (search)-[:HAS_PARAMETER]->(duplicatesFirstFileSearch)
+merge (search)-[:HAS_PARAMETER]->(duplicatesSecondFileSearch)
+merge (search)-[:HAS_PARAMETER]->(uniquesFirstFileSearch)
+merge (search)-[:HAS_PARAMETER]->(uniquesSecondFileSearch)
+
+merge (sort1)-[:HAS_STEP]->(search)
+merge (sort2)-[:HAS_STEP]->(search)
+
+merge (task)-[:HAS_STEP]->(sort1)
+merge (task)-[:HAS_STEP]->(sort2)
+
+
+merge (file1Param)-[:INITIALIZES]->(inputFileSort1)
+merge (file2Param)-[:INITIALIZES]->(inputFileSort2)
+merge (keys1Param)-[:INITIALIZES]->(keysSort1)
+merge (keys2Param)-[:INITIALIZES]->(keysSort2)
+merge (keys1Param)-[:INITIALIZES]->(firstKeysSearch)
+merge (keys2Param)-[:INITIALIZES]->(secondKeysSearch)
+merge (duplicatesFirstFileParam)-[:INITIALIZES]->(duplicatesFirstFileSearch)
+merge (uniquesFirstFileParam)-[:INITIALIZES]->(uniquesFirstFileSearch)
+merge (duplicatesSecondFileParam)-[:INITIALIZES]->(duplicatesSecondFileSearch)
+merge (uniquesSecondFileParam)-[:INITIALIZES]->(uniquesSecondFileSearch)
+
+merge (outputFileSort1)-[:INITIALIZES]->(firstInputSearch)
+merge (outputFileSort2)-[:INITIALIZES]->(secondInputSearch)
+
+
+;
+
+
+
