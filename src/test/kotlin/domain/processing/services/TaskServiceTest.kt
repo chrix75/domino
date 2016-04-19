@@ -98,7 +98,7 @@ class TaskServiceTest {
         val taskService = TaskService(session)
 
         try {
-            val template = taskService.findByTemplateUUID("5b922e85-8695-4cae-9ac6-1f7346f3426a")
+            val template = taskService.findByTemplateUUID("0f4af60b-ba74-435e-9f78-7ab8dcaa5a31")
             assertNotNull(template)
 
             template?.name = template?.name + " [" + UUID.randomUUID() + "]"
