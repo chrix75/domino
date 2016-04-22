@@ -1,0 +1,21 @@
+create (t:Task:Template { name: "TU PARAM", uuid: $uuid })
+create (s1:Step:Template { name: "STEP 1", uuid: $uuid })
+create (s2:Step:Template { name: "STEP 2", uuid: $uuid })
+create (s3:Step:Template { name: "STEP 3", uuid: $uuid })
+
+merge (t)-[:HAS_STEP]->(s1)
+merge (t)-[:HAS_STEP]->(s2)
+merge (s2)-[:HAS_STEP]->(s3)
+
+create (p1:Parameter:Template { name: "PARAM 1", uuid: $uuid })
+create (p2:Parameter:Template { name: "PARAM 2", uuid: $uuid })
+create (p3:Parameter:Template { name: "PARAM 3", uuid: $uuid })
+
+merge (t)-[:HAS_PARAMETER]->(p1)
+merge (s1)-[:HAS_PARAMETER]->(p2)
+merge (s3)-[:HAS_PARAMETER]->(p3)
+
+merge (p1)-[:INITIALIZES]->(p3);
+
+
+
