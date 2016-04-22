@@ -1,8 +1,9 @@
 package domain.processing.services
 
 import domain.global.errors.SaveException
-import domain.processing.entities.Task
+import domain.processing.entities.objects.TaskEntity
 import domain.global.services.GenericCRUD
+import domain.processing.entities.objects.ParameterEntity
 import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
 import java.util.*
@@ -15,19 +16,19 @@ import java.util.*
  * Created by Christian Sperandio on 09/04/2016.
  *
  */
-class TaskService(session: Session): GenericCRUD<Task>(session) {
+class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
 
     private val stepService = StepService(session)
 
-    override fun getEntityClass(): Class<Task> {
-        return Task::class.java
+    override fun getEntityClass(): Class<TaskEntity> {
+        return TaskEntity::class.java
     }
 
     /**
      *
      * @throws SaveException
      */
-    fun save(task: Task): Long? {
+    fun save(task: TaskEntity): Long? {
         val validation = domain.global.validators.validate(task)
 
         if (validation.hasError) {
@@ -49,13 +50,13 @@ class TaskService(session: Session): GenericCRUD<Task>(session) {
      *
      * @throws SaveException
      */
-    fun saveFromTemplate(template: Task): Long? {
+    fun saveFromTemplate(template: TaskEntity): Long? {
         template.resetId()
         return save(template)
     }
 
-    fun findByTemplateUUID(templateUUID: String): Task? {
-        val templateResults = session.query(Task::class.java,
+    fun findByTemplateUUID(templateUUID: String): TaskEntity? {
+        val templateResults = session.query(TaskEntity::class.java,
                 "match p=(t:Task {uuid: {uuid}})-[*]->() return t, nodes(p), rels(p)",
                 mapOf("uuid" to templateUUID)).iterator()
 
@@ -69,16 +70,29 @@ class TaskService(session: Session): GenericCRUD<Task>(session) {
         return null
     }
 
+    fun findByID(id: Long): TaskEntity? {
+        val templateResults = session.query(TaskEntity::class.java,
+                "match p=(t:Task)-[*]->() where id(t) = {id} return t, nodes(p), rels(p)",
+                mapOf("id" to id)).iterator()
+
+        if (templateResults.hasNext()) {
+            val template = templateResults.next()
+            return template
+        }
+
+        return null
+    }
+
     /**
      *
      * @throws SaveException
      */
-    override fun delete(o: Task) {
+    override fun delete(o: TaskEntity) {
         var tx = TransactionManager(session)
         tx.beginTransaction()
 
         try {
-            o.steps.forEach { step ->
+            o.steps?.forEach { step ->
                 stepService.delete(step)
             }
 

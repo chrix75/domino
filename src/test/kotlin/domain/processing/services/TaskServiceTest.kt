@@ -1,9 +1,9 @@
 package domain.processing.services
 
 import domain.global.errors.SaveException
-import domain.processing.entities.Parameter
-import domain.processing.entities.Step
-import domain.processing.entities.Task
+import domain.processing.entities.objects.ParameterEntity
+import domain.processing.entities.objects.StepEntity
+import domain.processing.entities.objects.TaskEntity
 import neo4j.utils.Neo4jSessionFactory
 import org.junit.After
 import org.junit.Test
@@ -22,19 +22,19 @@ class TaskServiceTest {
     @Before
     fun setUp() {
         session = Neo4jSessionFactory.getNeo4jSession()
+        println("Session=" + session)
     }
 
     @After
     fun tearDown() {
-        session.clear()
     }
 
     @Test
     fun saveWithSuccess() {
-        val task = Task(this.javaClass.name + ": My Task")
-        val step = Step("My First Step")
-        step.parameters = setOf(Parameter("A Parameter"))
-        task.steps = setOf<Step>(step)
+        val task = TaskEntity(this.javaClass.name + ": My Task")
+        val step = StepEntity("My First Step")
+        step.parameters = setOf(ParameterEntity("A Parameter"))
+        task.steps = setOf<StepEntity>(step)
 
         val taskService = TaskService(session)
 
@@ -50,9 +50,9 @@ class TaskServiceTest {
 
     @Test
     fun saveWithFailure() {
-        val task = Task(this.javaClass.name + ": My Task")
-        val step = Step("My First Step")
-        task.steps = setOf<Step>(step)
+        val task = TaskEntity(this.javaClass.name + ": My Task")
+        val step = StepEntity("My First Step")
+        task.steps = setOf<StepEntity>(step)
 
         val taskService = TaskService(session)
 
@@ -71,11 +71,8 @@ class TaskServiceTest {
         val taskService = TaskService(session)
 
         try {
-            val template = taskService.findByTemplateUUID("5b922e85-8695-4cae-9ac6-1f7346f3426a")
-            assertNotNull(template)
-
-            val id = taskService.saveFromTemplate(template!!)
-            assertNull(id)
+            val template = taskService.findByTemplateUUID("0f4a77f60b-ba74-435e-9f78-7ab8dcaa5a31")
+            assertNull(template)
         } catch(e: SaveException) {
         }
     }

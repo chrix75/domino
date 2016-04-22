@@ -1,4 +1,4 @@
-import domain.processing.entities.Task
+import domain.processing.entities.objects.TaskEntity
 import domain.global.services.GenericCRUD
 import domain.processing.services.TaskService
 import neo4j.utils.Neo4jSessionFactory

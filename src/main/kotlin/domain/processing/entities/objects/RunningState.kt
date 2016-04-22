@@ -1,4 +1,4 @@
-package domain.processing.entities
+package domain.processing.entities.objects
 
 /**
  *

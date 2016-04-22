@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="domino" />
         <module name="processingTree" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="domino" target="1.5" />
       <module name="processingTree" target="1.5" />
     </bytecodeTargetLevel>
   </component>

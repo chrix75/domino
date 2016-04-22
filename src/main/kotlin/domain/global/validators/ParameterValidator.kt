@@ -1,7 +1,7 @@
 package domain.global.validators
 
 import domain.global.validators.Error
-import domain.processing.entities.Parameter
+import domain.processing.entities.objects.ParameterEntity
 
 /**
  * Validator for parameter entities.
@@ -9,7 +9,7 @@ import domain.processing.entities.Parameter
  * Created by Christian Sperandio on 10/04/2016.
  *
  */
-class ParameterValidator : EntityValidator<Parameter> {
+class ParameterValidator : EntityValidator<ParameterEntity> {
     private val _errors = mutableMapOf<String, Error>()
 
     override val errors: Map<String, Error>
@@ -20,7 +20,7 @@ class ParameterValidator : EntityValidator<Parameter> {
      *
      * @param e The parameter to validate.
      */
-    override fun validate(e: Parameter) {
+    override fun validate(e: ParameterEntity) {
         if (e.name.isEmpty() || e.name.isBlank()) {
             _errors["NO_NAME"] = Error("NO_NAME", "A parameter must be named");
         }

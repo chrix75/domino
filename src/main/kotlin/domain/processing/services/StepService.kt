@@ -1,7 +1,7 @@
 package domain.processing.services
 
 import domain.global.services.GenericCRUD
-import domain.processing.entities.Step
+import domain.processing.entities.objects.StepEntity
 import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
 
@@ -13,25 +13,25 @@ import org.neo4j.ogm.session.Session
  * Created by Christian Sperandio on 10/04/2016.
  *
  */
-class StepService(session: Session) : GenericCRUD<Step>(session) {
+class StepService(session: Session) : GenericCRUD<StepEntity>(session) {
 
     private val parameterService = ParameterService(session)
 
-    override fun getEntityClass(): Class<Step> {
-        return Step::class.java
+    override fun getEntityClass(): Class<StepEntity> {
+        return StepEntity::class.java
     }
 
-    override fun delete(o: Step) {
+    override fun delete(o: StepEntity) {
         var tx = TransactionManager(session)
         tx.beginTransaction()
 
         try {
 
-            o.steps.forEach { substep ->
+            o.steps?.forEach { substep ->
                 delete(substep)
             }
 
-            o.parameters.forEach { param ->
+            o.parameters?.forEach { param ->
                 parameterService.delete(param)
             }
 

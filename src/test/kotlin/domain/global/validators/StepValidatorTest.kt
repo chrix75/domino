@@ -1,7 +1,7 @@
 package domain.global.validators
 
-import domain.processing.entities.Parameter
-import domain.processing.entities.Step
+import domain.processing.entities.objects.ParameterEntity
+import domain.processing.entities.objects.StepEntity
 import org.junit.Assert.*
 
 /**
@@ -10,7 +10,7 @@ import org.junit.Assert.*
 class StepValidatorTest {
     @org.junit.Test
     fun validationWithError() {
-        val step = Step()
+        val step = StepEntity()
         val validation = domain.global.validators.validate(step)
 
         assertTrue(validation.hasError)
@@ -20,8 +20,8 @@ class StepValidatorTest {
 
     @org.junit.Test
     fun validationWithoutError() {
-        val step = Step("A Step")
-        step.parameters = setOf(Parameter("P1"))
+        val step = StepEntity("A Step")
+        step.parameters = setOf(ParameterEntity("P1"))
 
         val validation = domain.global.validators.validate(step)
 

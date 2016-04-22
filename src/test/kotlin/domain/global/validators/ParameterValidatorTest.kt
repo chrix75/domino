@@ -1,6 +1,6 @@
 package domain.global.validators
 
-import domain.processing.entities.Parameter
+import domain.processing.entities.objects.ParameterEntity
 import org.junit.Assert.*
 
 /**
@@ -9,7 +9,7 @@ import org.junit.Assert.*
 class ParameterValidatorTest {
     @org.junit.Test
     fun validationWithError() {
-        val param = Parameter()
+        val param = ParameterEntity()
         val validation = domain.global.validators.validate(param)
 
         assertTrue(validation.hasError)
@@ -18,7 +18,7 @@ class ParameterValidatorTest {
 
     @org.junit.Test
     fun validationWithNoError() {
-        val param = Parameter("A Param")
+        val param = ParameterEntity("A Param")
         val validation = domain.global.validators.validate(param)
 
         assertFalse(validation.hasError)

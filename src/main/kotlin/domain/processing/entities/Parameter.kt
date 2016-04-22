@@ -1,36 +1,14 @@
 package domain.processing.entities
 
-import domain.global.entities.NamedEntity
-import domain.global.validators.EntityValidator
-import domain.global.validators.ParameterValidator
-import domain.global.validators.Validable
-import org.neo4j.ogm.annotation.NodeEntity
-import org.neo4j.ogm.annotation.Relationship
+import domain.processing.entities.objects.ParameterEntity
 
 /**
- * The parameter entity.
- *
- * Created by Christian Sperandio on 09/04/2016.
+ * Created by batman on 20/04/2016.
  *
  */
-@NodeEntity
-class Parameter(_name: String = "") : NamedEntity(_name), Validable<Parameter> {
-    var value: String = ""
+interface Parameter {
+    var value: String
+    val parameters: Set<Parameter>
 
-    @Relationship(type = "INITIALIZES")
-    var parameters: Set<Parameter> = setOf()
-
-    /**
-     * Returns an instance of the validator checks if a parameter is valid before saving into the DB.
-     */
-    override fun buildValidator(): EntityValidator<Parameter> {
-        return ParameterValidator()
-    }
-
-    /**
-     * Resets the id to null of the current parameter.
-     */
-    override fun resetId() {
-        id = null
-    }
+    fun resetId()
 }

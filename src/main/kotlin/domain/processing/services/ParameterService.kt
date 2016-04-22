@@ -1,7 +1,7 @@
 package domain.processing.services
 
 import domain.global.services.GenericCRUD
-import domain.processing.entities.Parameter
+import domain.processing.entities.objects.ParameterEntity
 import org.neo4j.ogm.session.Session
 
 /**
@@ -12,9 +12,9 @@ import org.neo4j.ogm.session.Session
  * Created by Christian Sperandio on 10/04/2016.
  *
  */
-class ParameterService(session: Session) : GenericCRUD<Parameter>(session) {
+class ParameterService(session: Session) : GenericCRUD<ParameterEntity>(session) {
 
-    override fun getEntityClass(): Class<Parameter> {
-        return Parameter::class.java
+    override fun getEntityClass(): Class<ParameterEntity> {
+        return ParameterEntity::class.java
     }
 }
