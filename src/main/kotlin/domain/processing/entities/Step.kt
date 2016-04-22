@@ -10,7 +10,12 @@ interface Step {
     var state: RunningState?
     val steps: Set<Step>?
     val parameters: Set<Parameter>?
+    val name: String?
 
     fun resetId()
+
+    fun stepByName(name: String): Step? = steps?.first { it.name == name }
+
+    fun parameterByName(name: String): Parameter? = parameters?.first { it.name == name }
 
 }

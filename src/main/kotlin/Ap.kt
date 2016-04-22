@@ -15,8 +15,6 @@ fun main(args: Array<String>) {
     val taskService = TaskService(session)
     val task =  taskService.find(5, GenericCRUD.FETCH_TYPE.LAZY)
 
-    if (task != null)
-        println(task)
-
+    println(task)
     println("It is the end.")
 }

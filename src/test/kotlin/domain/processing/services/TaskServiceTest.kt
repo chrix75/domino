@@ -95,14 +95,17 @@ class TaskServiceTest {
         val taskService = TaskService(session)
 
         try {
-            val template = taskService.findByTemplateUUID("0f4af60b-ba74-435e-9f78-7ab8dcaa5a31")
-            assertNotNull(template)
+            val task = taskService.findByTemplateUUID("0f4af60b-ba74-435e-9f78-7ab8dcaa5a31")
+            assertNotNull(task)
 
-            template?.name = template?.name + " [" + UUID.randomUUID() + "]"
-            val id = taskService.saveFromTemplate(template!!)
+            task?.name = task?.name + " [" + UUID.randomUUID() + "]"
+            task?.updateParameter("firstInputFilename", "/the/first/file")
+
+            val id = taskService.saveFromTemplate(task!!)
 
             assertNotNull(id)
         } catch(e: SaveException) {
+            e.printStackTrace()
             fail("The system must not accept 2 task with the same name.")
         }
     }

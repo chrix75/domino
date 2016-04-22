@@ -52,9 +52,7 @@ class StepEntity(_name: String = "") : NamedEntity(_name), Validable<StepEntity>
 
         parameters?.forEach { it.resetId() }
 
-        println("Before each in StepEntity " + this)
         steps?.forEach {
-            println("In each with step " + it)
             it.resetId()
         }
     }

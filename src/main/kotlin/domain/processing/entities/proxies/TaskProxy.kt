@@ -26,4 +26,10 @@ class TaskProxy(val taskEntity: TaskEntity) : Task {
 
     override val parameters: Set<Parameter>?
         get() = taskEntity.parameters
+
+    override var name: String?
+        get() = taskEntity.name
+        set(value) {
+            taskEntity.name = value
+        }
 }

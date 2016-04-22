@@ -7,8 +7,9 @@ import domain.processing.entities.objects.ParameterEntity
  *
  */
 interface Parameter {
-    var value: String
+    var value: String?
     val parameters: Set<Parameter>
+    val name: String?
 
     fun resetId()
 }

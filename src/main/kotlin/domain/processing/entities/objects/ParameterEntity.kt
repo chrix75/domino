@@ -16,7 +16,13 @@ import org.neo4j.ogm.annotation.Relationship
  */
 @NodeEntity(label = "Parameter")
 class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<ParameterEntity>, Parameter {
-    override var value: String = ""
+    override var value: String? = null
+        get() = field
+        set(value) {
+            field = value
+            parameters.forEach { it.value = value }
+        }
+
 
     @Relationship(type = "INITIALIZES")
     override var parameters: Set<ParameterEntity> = setOf()

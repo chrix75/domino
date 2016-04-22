@@ -21,12 +21,15 @@ class TaskValidator: EntityValidator<TaskEntity> {
      * @param e The task to validate.
      */
     override fun validate(e: TaskEntity) {
-        if (e.name.isEmpty() || e.name.isBlank()) {
-            _errors["NO_NAME"] = Error("NO_NAME", "A task must be named");
-        }
+        e.name?.let {
+            val _name: String = e.name!!
+            if (_name.isEmpty() || _name.isBlank()) {
+                _errors["NO_NAME"] = Error("NO_NAME", "A task must be named");
+            }
 
-        if (e.steps == null || e.steps?.size == 0) {
-            _errors["NO_STEP"] = Error("NO_STEP", "A task must have at least one step");
+            if (e.steps == null || e.steps?.size == 0) {
+                _errors["NO_STEP"] = Error("NO_STEP", "A task must have at least one step");
+            }
         }
 
         e.steps?.forEach { step ->

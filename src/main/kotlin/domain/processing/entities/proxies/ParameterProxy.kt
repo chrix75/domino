@@ -8,11 +8,14 @@ import domain.processing.entities.objects.ParameterEntity
  *
  */
 class ParameterProxy(val parameterEntity: ParameterEntity) : Parameter {
+    override val name: String?
+        get() = parameterEntity.name
+
     override fun resetId() {
         parameterEntity.resetId()
     }
 
-    override var value: String
+    override var value: String?
         get() = parameterEntity.value
         set(value) { parameterEntity.value = value}
 

@@ -3,7 +3,9 @@ package domain.processing.services
 import domain.global.errors.SaveException
 import domain.processing.entities.objects.TaskEntity
 import domain.global.services.GenericCRUD
+import domain.processing.entities.Task
 import domain.processing.entities.objects.ParameterEntity
+import domain.processing.entities.proxies.TaskProxy
 import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
 import java.util.*
@@ -50,12 +52,18 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
      *
      * @throws SaveException
      */
-    fun saveFromTemplate(template: TaskEntity): Long? {
+    fun saveFromTemplate(template: Task): Long? {
         template.resetId()
-        return save(template)
+        if (template is TaskProxy)
+            return save(template.taskEntity)
+
+        if (template is TaskEntity)
+            return save(template)
+
+        throw SaveException("The task must be either an entity or a proxy")
     }
 
-    fun findByTemplateUUID(templateUUID: String): TaskEntity? {
+    fun findByTemplateUUID(templateUUID: String): Task? {
         val templateResults = session.query(TaskEntity::class.java,
                 "match p=(t:Task {uuid: {uuid}})-[*]->() return t, nodes(p), rels(p)",
                 mapOf("uuid" to templateUUID)).iterator()
@@ -64,7 +72,7 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
             val template = templateResults.next()
 
             template.resetId()
-            return template
+            return TaskProxy(template)
         }
 
         return null

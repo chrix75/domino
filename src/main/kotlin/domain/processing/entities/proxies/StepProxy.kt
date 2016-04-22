@@ -25,4 +25,7 @@ class StepProxy(val stepEntity: StepEntity) : Step {
     override fun resetId() {
         stepEntity.resetId()
     }
+
+    override val name: String?
+        get() = stepEntity.name
 }

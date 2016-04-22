@@ -21,10 +21,13 @@ class StepValidator: EntityValidator<StepEntity> {
      * @param e The step to validate.
      */
     override fun validate(e: StepEntity) {
-        if (e.name.isEmpty() || e.name.isBlank()) {
-            _errors["NO_NAME"] = Error("NO_NAME", "A step must be named");
-        }
+        e.name?.let {
+            val _name = e.name!!
 
+            if (_name.isEmpty() || _name.isBlank()) {
+                _errors["NO_NAME"] = Error("NO_NAME", "A step must be named");
+            }
+        }
         if (e.parameters == null || e.parameters?.size == 0) {
             _errors["NO_PARAMETER"] = Error("NO_PARAMETER", "A step must have at least one parameter");
         }

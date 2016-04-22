@@ -21,8 +21,11 @@ class ParameterValidator : EntityValidator<ParameterEntity> {
      * @param e The parameter to validate.
      */
     override fun validate(e: ParameterEntity) {
-        if (e.name.isEmpty() || e.name.isBlank()) {
-            _errors["NO_NAME"] = Error("NO_NAME", "A parameter must be named");
+        e.name?.let {
+            val _name = e.name!!
+            if (_name.isEmpty() || _name.isBlank()) {
+                _errors["NO_NAME"] = Error("NO_NAME", "A parameter must be named");
+            }
         }
     }
 }
