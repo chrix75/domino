@@ -36,5 +36,17 @@ class TaskValidator: EntityValidator<TaskEntity> {
             val validation = domain.global.validators.validate(step)
             _errors.putAll(validation.errors)
         }
+
+        // checks unique names of steps
+        val uniqueStepNames = e.steps?.map { it.name }?.toSet()
+        if (uniqueStepNames?.size != e.steps?.size)
+            _errors["DUPLICATE_NAMES"] = Error("DUPLICATE_NAMES", "At least two steps have the same name")
+
+        // checks unique names of parameters
+        val uniqueParamNames = e.parameters?.map { it.name }?.toSet()
+        if (uniqueParamNames?.size != e.parameters?.size)
+            _errors["DUPLICATE_NAMES"] = Error("DUPLICATE_NAMES", "At least two parameters have the same name")
+
+
     }
 }
