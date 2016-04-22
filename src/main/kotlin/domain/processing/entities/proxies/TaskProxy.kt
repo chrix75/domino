@@ -7,7 +7,7 @@ import domain.processing.entities.objects.RunningState
 import domain.processing.entities.objects.TaskEntity
 
 /**
- * Created by batman on 20/04/2016.
+ * Created by Christian Sperandio on 20/04/2016.
  *
  */
 class TaskProxy(val taskEntity: TaskEntity) : Task {

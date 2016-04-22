@@ -4,7 +4,7 @@ import org.junit.Assert.*
 import org.junit.Test
 
 /**
- * Created by batman on 19/04/2016.
+ * Created by Christian Sperandio on 19/04/2016.
  */
 class ActionsDirectoryTest {
 

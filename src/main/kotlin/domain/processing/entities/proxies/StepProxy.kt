@@ -6,7 +6,7 @@ import domain.processing.entities.objects.RunningState
 import domain.processing.entities.objects.StepEntity
 
 /**
- * Created by batman on 20/04/2016.
+ * Created by Christian Sperandio on 20/04/2016.
  *
  */
 class StepProxy(val stepEntity: StepEntity) : Step {

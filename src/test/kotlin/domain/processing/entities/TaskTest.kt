@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * Created by batman on 22/04/2016.
+ * Created by Christian Sperandio on 22/04/2016.
  *
  */
 class TaskTest {

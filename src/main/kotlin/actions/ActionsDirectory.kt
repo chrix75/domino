@@ -3,7 +3,7 @@ package actions
 import kotlin.reflect.KClass
 
 /**
- * Created by batman on 19/04/2016.
+ * Created by Christian Sperandio on 19/04/2016.
  *
  */
 object ActionsDirectory {
