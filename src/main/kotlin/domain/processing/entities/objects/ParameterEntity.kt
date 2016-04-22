@@ -24,7 +24,7 @@ class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<Parame
         }
 
 
-    @Relationship(type = "INITIALIZES")
+    @Relationship(type = "INITIALIZES", direction = Relationship.OUTGOING)
     override var parameters: Set<ParameterEntity> = setOf()
 
     /**
