@@ -8,7 +8,18 @@ import java.util.*
  *
  */
 class FilepathParameterGenerator : ParameterGenerator {
-    override fun generateFrom1(directory: String): String {
-        return "$directory${File.separator}${UUID.randomUUID()}"
+    private var directory: String? = null
+
+    override fun generateFrom(v: String): String {
+        return "$v${File.separator}${UUID.randomUUID()}"
+    }
+
+    override fun generateFrom(): String {
+        val dir = directory
+        dir?.let {
+            return generateFrom(dir)
+        }
+
+        return ""
     }
 }

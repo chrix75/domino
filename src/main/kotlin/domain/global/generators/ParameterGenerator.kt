@@ -5,15 +5,11 @@ package domain.global.generators
  *
  */
 interface ParameterGenerator {
-    fun generateFrom1(v: String) : String {
+    fun generateFrom(v: String) : String {
         return ""
     }
 
-    fun generateFrom2(v1: String, v2: String) : String {
-        return ""
-    }
-
-    fun generateFromN(vs: Array<String>) : String {
+    fun generateFrom() : String {
         return ""
     }
 

@@ -9,16 +9,27 @@ import java.util.*
  *
  */
 class PropertyParameterGenerator : ParameterGenerator {
-    override fun generateFrom2(propertiesFilepath: String, propertyName: String): String {
+    private var propertiesPath: String? = null
+    private var propertyName: String? = null
+
+    override fun generateFrom(otherPropertyName: String): String {
         val props = Properties()
 
         try {
-            props.load(FileInputStream(propertiesFilepath))
-            return props.getProperty(propertyName, "")
+            props.load(FileInputStream(propertiesPath))
+            return props.getProperty(otherPropertyName, "")
         } catch (e: Exception) {
             e.printStackTrace()
             return ""
         }
+    }
 
+    override fun generateFrom(): String {
+        val name = propertyName
+        name?.let {
+            return generateFrom(name)
+        }
+
+        return ""
     }
 }
