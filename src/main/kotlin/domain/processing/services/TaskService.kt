@@ -53,7 +53,6 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
      * @throws SaveException
      */
     fun saveFromTemplate(template: Task): Long? {
-        template.resetId()
         if (template is TaskProxy)
             return save(template.taskEntity)
 
