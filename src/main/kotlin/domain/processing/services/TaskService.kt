@@ -64,7 +64,7 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
 
     fun findByTemplateUUID(templateUUID: String): Task? {
         val templateResults = session.query(TaskEntity::class.java,
-                "match p=(t:Task {uuid: {uuid}})-[*]->() return t, nodes(p), rels(p)",
+                "match p=(t:Task {uuid: {uuid}})-[*]->()<-[*0..1]-() return t, nodes(p), rels(p)",
                 mapOf("uuid" to templateUUID)).iterator()
 
         if (templateResults.hasNext()) {
@@ -79,7 +79,7 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
 
     fun findByID(id: Long): TaskEntity? {
         val templateResults = session.query(TaskEntity::class.java,
-                "match p=(t:Task)-[*]->() where id(t) = {id} return t, nodes(p), rels(p)",
+                "match p=(t:Task)-[*]->()<-[*0..1]-() where id(t) = {id} return t, nodes(p), rels(p)",
                 mapOf("id" to id)).iterator()
 
         if (templateResults.hasNext()) {

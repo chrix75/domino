@@ -1,6 +1,7 @@
 package domain.processing.entities.objects
 
 import domain.global.entities.NamedEntity
+import domain.global.generators.ParameterGenerator
 import domain.global.validators.EntityValidator
 import domain.global.validators.StepValidator
 import domain.global.validators.Validable

@@ -1,6 +1,7 @@
 package domain.processing.entities.objects
 
 import domain.global.entities.NamedEntity
+import domain.global.generators.ParameterGenerator
 import domain.global.validators.EntityValidator
 import domain.global.validators.ParameterValidator
 import domain.global.validators.Validable
@@ -26,6 +27,11 @@ class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<Parame
 
     @Relationship(type = "INITIALIZES", direction = Relationship.OUTGOING)
     override var parameters: Set<ParameterEntity> = setOf()
+
+
+    @Relationship(type = "GENERATES", direction = Relationship.INCOMING)
+    var generator: ParameterGenerator? = null
+
 
     /**
      * Returns an instance of the validator checks if a parameter is valid before saving into the DB.
