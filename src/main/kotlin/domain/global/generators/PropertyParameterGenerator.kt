@@ -8,10 +8,7 @@ import java.util.*
  * Created by Christian Sperandio on 23/04/2016.
  *
  */
-class PropertyParameterGenerator : ParameterGenerator {
-    private var propertiesPath: String? = null
-    private var propertyName: String? = null
-
+class PropertyParameterGenerator(var propertiesPath: String? = null, var propertyName: String? = null) : ParameterGenerator {
     override fun generateFrom(otherPropertyName: String): String {
         val props = Properties()
 

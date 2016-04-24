@@ -7,8 +7,7 @@ import java.util.*
  * Created by Christian Sperandio on 23/04/2016.
  *
  */
-class FilepathParameterGenerator : ParameterGenerator {
-    private var directory: String? = null
+class FilepathParameterGenerator(var directory: String? = null) : ParameterGenerator {
 
     override fun generateFrom(v: String): String {
         return "$v${File.separator}${UUID.randomUUID()}"

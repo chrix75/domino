@@ -14,12 +14,12 @@ class PropertyParameterGeneratorTest {
 
     @Before
     fun setUp() {
-        generator = PropertyParameterGenerator()
         propertiesFilepath = this.javaClass.getResource("/for_test.properties").path
+        generator = PropertyParameterGenerator(propertiesFilepath, "a.property.for.generator")
     }
 
     @Test
     fun generateFrom2() {
-        assertEquals("Property Generator", generator.generateFrom2(propertiesFilepath, "a.property.for.generator"))
+        assertEquals("Property Generator", generator.generateFrom())
     }
 }
