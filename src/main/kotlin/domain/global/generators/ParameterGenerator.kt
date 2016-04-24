@@ -13,4 +13,6 @@ interface ParameterGenerator {
         return ""
     }
 
+    fun resetId()
+
 }

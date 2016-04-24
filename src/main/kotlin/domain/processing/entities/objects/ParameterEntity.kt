@@ -45,5 +45,6 @@ class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<Parame
      */
     override fun resetId() {
         id = null
+        generator?.resetId()
     }
 }
