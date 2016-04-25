@@ -93,6 +93,8 @@ class Step(val stepEntity: StepEntity) {
                 if (generator is FilepathParameterGenerator) {
                     generator.directory = stepPath.absolutePath
                 }
+
+                param.value = generator.generateFrom()
             }
         }
 
