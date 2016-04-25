@@ -63,7 +63,7 @@ class StepProxy(val stepEntity: StepEntity) : Step {
             if (!stepDir.mkdir())
                 throw IllegalStateException("Impossible to create the directory ${stepDir.absolutePath}")
         } else if (stepDir.isFile) {
-            throw IllegalStateException("The directory ${stepDir.absolutePath} leads to a file")
+            throw FileAlreadyExistsException(stepDir, null, "The directory ${stepDir.absolutePath} leads to a file")
         }
 
         // initializes the generators if needed
