@@ -29,7 +29,7 @@ class PropertyParameterGenerator(@field:Property var propertiesPath: String? = n
         val props = Properties()
 
         try {
-            props.load(FileInputStream(v))
+            props.load(FileInputStream(propertiesPath))
             return props.getProperty(v, "")
         } catch (e: Exception) {
             e.printStackTrace()

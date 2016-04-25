@@ -26,11 +26,14 @@ merge (keysSort1:Parameter:Template {name: "sortingKeys", uuid: $uuid})
 
 merge (sort1)-[:HAS_PARAMETER]->(inputFileSort1)
 merge (sort1)-[:HAS_PARAMETER]->(outputFileSort1)
+merge (outputFileSort1)<-[:GENERATES]-(g:FilepathParameterGenerator:Template {uuid: $uuid});
 merge (sort1)-[:HAS_PARAMETER]->(keysSort1)
+
 
 merge (sort2:Step:Template {name: "Sorting the second file", description: "Sort the second file", uuid: $uuid})
 merge (inputFileSort2:Parameter:Template {name: "inputFile", uuid: $uuid})
 merge (outputFileSort2:Parameter:Template {name: "sortedFile", uuid: $uuid})
+merge (outputFileSort2)<-[:GENERATES]-(g:FilepathParameterGenerator:Template {uuid: $uuid});
 merge (keysSort2:Parameter:Template {name: "sortingKeys", uuid: $uuid})
 
 merge (sort2)-[:HAS_PARAMETER]->(inputFileSort2)

@@ -56,9 +56,6 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
         if (template is TaskProxy)
             return save(template.taskEntity)
 
-        if (template is TaskEntity)
-            return save(template)
-
         throw SaveException("The task must be either an entity or a proxy")
     }
 

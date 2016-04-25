@@ -19,7 +19,7 @@ class PropertyParameterGeneratorTest {
     }
 
     @Test
-    fun generateFrom2() {
+    fun generateFrom() {
         assertEquals("Property Generator", generator.generateFrom())
     }
 }

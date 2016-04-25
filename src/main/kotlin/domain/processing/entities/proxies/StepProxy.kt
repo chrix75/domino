@@ -1,8 +1,8 @@
 package domain.processing.entities.proxies
 
-import com.google.common.base.CaseFormat
 import domain.processing.entities.Parameter
 import domain.processing.entities.Step
+import domain.processing.entities.objects.ParameterEntity
 import domain.processing.entities.objects.RunningState
 import domain.processing.entities.objects.StepEntity
 import java.io.File
@@ -12,6 +12,24 @@ import java.io.File
  *
  */
 class StepProxy(val stepEntity: StepEntity) : Step {
+
+    companion object {
+        fun convertStepEntitiesToSteps(steps: Set<StepEntity>?): Set<Step> {
+            val proxies: MutableSet<Step> = mutableSetOf()
+            steps?.let {
+                val currentSteps = steps
+                val iterator = currentSteps.iterator()
+
+                for (step in iterator) {
+                    proxies.add(StepProxy(step))
+                }
+            }
+
+            return proxies
+        }
+
+    }
+
     override var state: RunningState?
         get() = stepEntity.state
         set(value) {
@@ -19,10 +37,10 @@ class StepProxy(val stepEntity: StepEntity) : Step {
         }
 
     override val steps: Set<Step>?
-        get() = stepEntity.steps
+        get() = StepProxy.convertStepEntitiesToSteps(stepEntity.steps)
 
     override val parameters: Set<Parameter>?
-        get() = stepEntity.parameters
+        get() = ParameterProxy.convertParameterEntitiesToParameters(stepEntity.parameters)
 
     override fun resetId() {
         stepEntity.resetId()

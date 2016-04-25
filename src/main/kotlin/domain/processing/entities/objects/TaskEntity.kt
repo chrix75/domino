@@ -22,20 +22,20 @@ import org.neo4j.ogm.annotation.Transient
  *
  */
 @NodeEntity(label = "Task")
-class TaskEntity(_name: String = "") : NamedEntity(_name), Validable<TaskEntity>, Task {
+class TaskEntity(_name: String = "") : NamedEntity(_name), Validable<TaskEntity> {
 
     @Property
     var description = ""
 
     @Property
-    override var state: RunningState? = RunningState.TO_CONFIGURE
+    var state: RunningState? = RunningState.TO_CONFIGURE
 
 
     @Relationship(type = "HAS_PARAMETER", direction = Relationship.OUTGOING)
-    override var parameters: Set<ParameterEntity>? = null
+    var parameters: Set<ParameterEntity>? = null
 
     @Relationship(type = "HAS_STEP", direction = Relationship.OUTGOING)
-    override var steps: Set<StepEntity>? = null
+    var steps: Set<StepEntity>? = null
 
     override fun toString(): String {
         return "Task $id [$name] \"$description\""

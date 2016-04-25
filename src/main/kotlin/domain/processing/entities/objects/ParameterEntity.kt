@@ -16,8 +16,8 @@ import org.neo4j.ogm.annotation.Relationship
  *
  */
 @NodeEntity(label = "Parameter")
-class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<ParameterEntity>, Parameter {
-    override var value: String? = null
+class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<ParameterEntity> {
+    var value: String? = null
         get() = field
         set(value) {
             field = value
@@ -26,7 +26,7 @@ class ParameterEntity(_name: String = "") : NamedEntity(_name), Validable<Parame
 
 
     @Relationship(type = "INITIALIZES", direction = Relationship.OUTGOING)
-    override var parameters: Set<ParameterEntity> = setOf()
+    var parameters: Set<ParameterEntity> = setOf()
 
 
     @Relationship(type = "GENERATES", direction = Relationship.INCOMING)
