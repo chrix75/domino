@@ -7,6 +7,8 @@ import java.io.File
 import java.util.*
 
 /**
+ * The FilepathParameterGenerator objects generates a file path.
+ *
  * Created by Christian Sperandio on 23/04/2016.
  *
  */

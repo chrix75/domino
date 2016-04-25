@@ -8,6 +8,8 @@ import java.io.InputStream
 import java.util.*
 
 /**
+ * The PropertyParameterGenerator objects generate a value from a properties file.
+ *
  * Created by Christian Sperandio on 23/04/2016.
  *
  */
@@ -17,12 +19,18 @@ class PropertyParameterGenerator(@field:Property var propertiesPath: String? = n
         id = null
     }
 
-    override fun generateFrom(otherPropertyName: String): String {
+    /**
+     * Returns the value for the given key.
+     *
+     * @param v The property key to search.
+     * @return The property value or an empty string if the key is not found.
+     */
+    override fun generateFrom(v: String): String {
         val props = Properties()
 
         try {
-            props.load(FileInputStream(propertiesPath))
-            return props.getProperty(otherPropertyName, "")
+            props.load(FileInputStream(v))
+            return props.getProperty(v, "")
         } catch (e: Exception) {
             e.printStackTrace()
             return ""
