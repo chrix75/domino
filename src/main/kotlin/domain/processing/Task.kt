@@ -1,12 +1,13 @@
-package domain.processing.entities
+package domain.processing
 
 import domain.processing.entities.objects.RunningState
+import domain.processing.entities.objects.TaskEntity
+import utils.createEntityDirectory
 import java.io.File
 
 /**
  * Created by Christian Sperandio on 20/04/2016.
  *
- * Interface for the tasks.
  *
  * @property state The current task state.
  * @property steps The steps of the task.
@@ -14,16 +15,54 @@ import java.io.File
  * @property name Task name
  *
  */
-interface Task {
-    var state: RunningState?
-    val steps: Set<Step>?
-    val parameters: Set<Parameter>?
-    var name: String?
+class Task(val taskEntity: TaskEntity) {
 
     /**
      * Set to null the ID of the task.
      */
-    fun resetId()
+    fun resetId() {
+        taskEntity.resetId()
+    }
+
+    var state: RunningState?
+        get() = taskEntity.state
+        set(value) {
+            taskEntity.state = value
+        }
+
+    val steps: Set<Step>?
+        get() = Step.convertStepEntitiesToSteps(taskEntity.steps)
+
+    val parameters: Set<Parameter>?
+        get() = Parameter.convertParameterEntitiesToParameters(taskEntity.parameters)
+
+    var name: String?
+        get() = taskEntity.name
+        set(value) {
+            taskEntity.name = value
+        }
+
+    /**
+     * Creates folder for the task inside the `baseDir` directory.
+     * The directories of (sub)steps are created and parameter generators are initialized too.
+     *
+     *
+     * @param baseDir The directory in which the step folder will be created.
+     * @throws NoSuchFileException
+     * @throws java.nio.file.FileAlreadyExistsException
+     * @throws IllegalStateException
+     */
+    fun prepareTaskDirectory(baseDir: File) {
+        val _name = name
+        val _id = taskEntity.id
+
+        if (_name == null || _id == null)
+            throw IllegalStateException("The system can't create a folder for a task with no name or no id.")
+
+        val path = createEntityDirectory(baseDir, _name, _id)
+
+        steps?.forEach { it.prepareStepDirectory(path) }
+    }
 
     /**
      * Changes the value of a task parameter. When a task parameter is changed, all linked step parameters are
@@ -56,7 +95,6 @@ interface Task {
      */
     fun stepByName(name: String): Step? = steps?.first { it.name == name }
 
-
     /**
      * Returns the parameter of the task given its name.
      * **Note:** The parameters of the same task shouldn't share the same name.
@@ -65,18 +103,5 @@ interface Task {
      * @return The found parameter or null.
      */
     fun parameterByName(name: String): Parameter? = parameters?.first { it.name == name }
-
-
-    /**
-     * Creates folder for the task inside the `baseDir` directory.
-     * The directories of (sub)steps are created and parameter generators are initialized too.
-     *
-     *
-     * @param baseDir The directory in which the step folder will be created.
-     * @throws NoSuchFileException
-     * @throws java.nio.file.FileAlreadyExistsException
-     * @throws IllegalStateException
-     */
-    fun prepareTaskDirectory(baseDir: File)
 
 }

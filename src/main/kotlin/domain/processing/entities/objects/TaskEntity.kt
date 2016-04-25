@@ -4,13 +4,9 @@ import domain.global.entities.NamedEntity
 import domain.global.validators.EntityValidator
 import domain.global.validators.TaskValidator
 import domain.global.validators.Validable
-import domain.processing.entities.Parameter
-import domain.processing.entities.Step
-import domain.processing.entities.Task
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Property
 import org.neo4j.ogm.annotation.Relationship
-import org.neo4j.ogm.annotation.Transient
 
 /**
  * The Task class is the entity representation of a task.

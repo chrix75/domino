@@ -1,20 +1,25 @@
-package domain.processing.entities.proxies
+package domain.processing
 
-import domain.processing.entities.Parameter
 import domain.processing.entities.objects.ParameterEntity
 
 /**
  * Created by Christian Sperandio on 20/04/2016.
  *
+ * Interface for task or step parameters.
+ *
+ * @property value The value of the parameter.
+ * @property parameters The parameters are initialized by the current parameter.
+ * @property name The name of the parameter.
+ *
  */
-class ParameterProxy(val parameterEntity: ParameterEntity) : Parameter {
+class Parameter(val parameterEntity: ParameterEntity) {
 
     companion object {
         fun convertParameterEntitiesToParameters(parameters: Set<ParameterEntity>?): Set<Parameter> {
             val proxies: MutableSet<Parameter> = mutableSetOf()
 
             parameters?.forEach {
-                proxies.add(ParameterProxy(it))
+                proxies.add(Parameter(it))
             }
 
             return proxies
@@ -22,22 +27,25 @@ class ParameterProxy(val parameterEntity: ParameterEntity) : Parameter {
 
     }
 
-    override val name: String?
+    val name: String?
         get() = parameterEntity.name
 
-    override fun resetId() {
+    /**
+     * Set the parameter ID to null.
+     */
+    fun resetId() {
         parameterEntity.resetId()
     }
 
-    override var value: String?
+    var value: String?
         get() = parameterEntity.value
         set(value) { parameterEntity.value = value}
 
-    override val parameters: Set<Parameter>
+    val parameters: Set<Parameter>
         get() {
             val paramProxies: MutableSet<Parameter> = mutableSetOf()
             for (parameter in parameterEntity.parameters) {
-                paramProxies.add(ParameterProxy(parameter))
+                paramProxies.add(Parameter(parameter))
             }
 
             return paramProxies

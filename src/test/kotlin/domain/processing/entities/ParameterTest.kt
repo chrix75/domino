@@ -1,7 +1,7 @@
 package domain.processing.entities
 
 import domain.processing.entities.objects.ParameterEntity
-import domain.processing.entities.proxies.ParameterProxy
+import domain.processing.Parameter
 import org.junit.Assert
 
 import org.junit.Before
@@ -20,7 +20,7 @@ class ParameterTest {
     @Before
     fun setUp() {
         parameterEntity = ParameterEntity("A parameter")
-        parameter = ParameterProxy(parameterEntity)
+        parameter = Parameter(parameterEntity)
     }
 
     @Test

@@ -3,9 +3,7 @@ package domain.processing.services
 import domain.global.errors.SaveException
 import domain.processing.entities.objects.TaskEntity
 import domain.global.services.GenericCRUD
-import domain.processing.entities.Task
-import domain.processing.entities.objects.ParameterEntity
-import domain.processing.entities.proxies.TaskProxy
+import domain.processing.Task
 import neo4j.utils.TransactionManager
 import org.neo4j.ogm.session.Session
 import java.util.*
@@ -53,10 +51,7 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
      * @throws SaveException
      */
     fun saveFromTemplate(template: Task): Long? {
-        if (template is TaskProxy)
-            return save(template.taskEntity)
-
-        throw SaveException("The task must be either an entity or a proxy")
+        return save(template.taskEntity)
     }
 
     fun findByTemplateUUID(templateUUID: String): Task? {
@@ -68,7 +63,7 @@ class TaskService(session: Session): GenericCRUD<TaskEntity>(session) {
             val template = templateResults.next()
 
             template.resetId()
-            return TaskProxy(template)
+            return Task(template)
         }
 
         return null

@@ -1,16 +1,12 @@
 package domain.processing.entities.objects
 
 import domain.global.entities.NamedEntity
-import domain.global.generators.ParameterGenerator
 import domain.global.validators.EntityValidator
 import domain.global.validators.StepValidator
 import domain.global.validators.Validable
-import domain.processing.entities.Parameter
-import domain.processing.entities.Step
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Property
 import org.neo4j.ogm.annotation.Relationship
-import org.neo4j.ogm.annotation.Transient
 
 /**
  * The Step class is the Step entity saved into the DB.

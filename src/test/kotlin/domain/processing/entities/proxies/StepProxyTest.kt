@@ -2,6 +2,7 @@ package domain.processing.entities.proxies
 
 
 import domain.global.generators.FilepathParameterGenerator
+import domain.processing.Step
 import domain.processing.entities.objects.ParameterEntity
 import domain.processing.entities.objects.StepEntity
 import org.junit.Before
@@ -35,7 +36,7 @@ class StepProxyTest {
 
         stepEntity.steps = setOf(subStepEntity)
 
-        val step = StepProxy(stepEntity)
+        val step = Step(stepEntity)
 
         val expectedDirectory = File("/tmp/step_my_step_1")
         if (expectedDirectory.exists())
@@ -64,7 +65,7 @@ class StepProxyTest {
     @Test
     fun failPrepareStepDirectory() {
         val stepEntity = StepEntity()
-        val step = StepProxy(stepEntity)
+        val step = Step(stepEntity)
 
         try {
             step.prepareStepDirectory(File("/tmp"))

@@ -5,7 +5,6 @@ import domain.global.generators.ParameterGenerator
 import domain.global.validators.EntityValidator
 import domain.global.validators.ParameterValidator
 import domain.global.validators.Validable
-import domain.processing.entities.Parameter
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Relationship
 

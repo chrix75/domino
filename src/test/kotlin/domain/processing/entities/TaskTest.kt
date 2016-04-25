@@ -1,5 +1,6 @@
 package domain.processing.entities
 
+import domain.processing.Task
 import domain.processing.services.TaskService
 import neo4j.utils.Neo4jSessionFactory
 import org.junit.Assert.*
