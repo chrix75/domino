@@ -36,6 +36,17 @@ interface Task {
     }
 
     /**
+     * Sets the given parameters for the current task.
+     *
+     * @param parameters An Pairs array of which each pair is <Parameter name, Parameter value>.
+     */
+    fun updateParameters(parameters: Array<Pair<String, String>>) {
+        for (param in parameters) {
+            updateParameter(param.first, param.second)
+        }
+    }
+
+    /**
      * Returns the step of the task given its name.
      * **Note:** The steps of the same task shouldn't share the same name.
      *
