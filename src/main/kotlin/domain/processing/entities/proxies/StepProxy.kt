@@ -1,5 +1,6 @@
 package domain.processing.entities.proxies
 
+import domain.global.generators.FilepathParameterGenerator
 import domain.processing.entities.Parameter
 import domain.processing.entities.Step
 import domain.processing.entities.objects.ParameterEntity
@@ -16,13 +17,8 @@ class StepProxy(val stepEntity: StepEntity) : Step {
     companion object {
         fun convertStepEntitiesToSteps(steps: Set<StepEntity>?): Set<Step> {
             val proxies: MutableSet<Step> = mutableSetOf()
-            steps?.let {
-                val currentSteps = steps
-                val iterator = currentSteps.iterator()
-
-                for (step in iterator) {
-                    proxies.add(StepProxy(step))
-                }
+            steps?.forEach {
+                proxies.add(StepProxy(it))
             }
 
             return proxies
@@ -70,5 +66,17 @@ class StepProxy(val stepEntity: StepEntity) : Step {
             throw IllegalStateException("The directory ${stepDir.absolutePath} leads to a file")
         }
 
+        // initializes the generators if needed
+        stepEntity.parameters?.forEach { param ->
+            val generator = param.generator
+            generator?.let {
+                if (generator is FilepathParameterGenerator) {
+                    generator.directory = stepPath
+                }
+            }
+        }
+
+        // prepares the sub steps
+        steps?.forEach { it.prepareStepDirectory(baseDir) }
     }
 }

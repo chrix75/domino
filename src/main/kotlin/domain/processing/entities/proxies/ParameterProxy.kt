@@ -12,13 +12,9 @@ class ParameterProxy(val parameterEntity: ParameterEntity) : Parameter {
     companion object {
         fun convertParameterEntitiesToParameters(parameters: Set<ParameterEntity>?): Set<Parameter> {
             val proxies: MutableSet<Parameter> = mutableSetOf()
-            parameters?.let {
-                val currentSteps = parameters
-                val iterator = currentSteps.iterator()
 
-                for (param in iterator) {
-                    proxies.add(ParameterProxy(param))
-                }
+            parameters?.forEach {
+                proxies.add(ParameterProxy(it))
             }
 
             return proxies
