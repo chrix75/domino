@@ -3,7 +3,6 @@ package domain.processing.entities.proxies
 import domain.global.generators.FilepathParameterGenerator
 import domain.processing.entities.Parameter
 import domain.processing.entities.Step
-import domain.processing.entities.objects.ParameterEntity
 import domain.processing.entities.objects.RunningState
 import domain.processing.entities.objects.StepEntity
 import java.io.File
@@ -46,32 +45,21 @@ class StepProxy(val stepEntity: StepEntity) : Step {
         get() = stepEntity.name
 
     override fun prepareStepDirectory(baseDir: File) {
-        if (!baseDir.exists())
-            throw NoSuchFileException(baseDir, null, "Directory ${baseDir.absolutePath} not found")
+        val _name = name
+        val _id = stepEntity.id
 
-        val stepName = name
-        val stepId = stepEntity.id
-
-        if (stepName == null || stepId == null)
+        if (_name == null || _id == null)
             throw IllegalStateException("The system can't create a folder for a step with no name or no id.")
 
-        val stepDirName = stepName.replace(Regex("[^0-9a-zA-Z]"), "_")
-        val stepPath = "${baseDir}${File.separator}step_${stepDirName}_$stepId"
-        val stepDir = File(stepPath)
+        val stepPath = utils.createEntityDirectory(baseDir, _name, _id)
 
-        if (!stepDir.exists()) {
-            if (!stepDir.mkdir())
-                throw IllegalStateException("Impossible to create the directory ${stepDir.absolutePath}")
-        } else if (stepDir.isFile) {
-            throw FileAlreadyExistsException(stepDir, null, "The directory ${stepDir.absolutePath} leads to a file")
-        }
 
         // initializes the generators if needed
         stepEntity.parameters?.forEach { param ->
             val generator = param.generator
             generator?.let {
                 if (generator is FilepathParameterGenerator) {
-                    generator.directory = stepPath
+                    generator.directory = stepPath.absolutePath
                 }
             }
         }

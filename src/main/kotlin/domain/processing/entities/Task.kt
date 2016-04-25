@@ -1,6 +1,7 @@
 package domain.processing.entities
 
 import domain.processing.entities.objects.RunningState
+import java.io.File
 
 /**
  * Created by Christian Sperandio on 20/04/2016.
@@ -64,5 +65,18 @@ interface Task {
      * @return The found parameter or null.
      */
     fun parameterByName(name: String): Parameter? = parameters?.first { it.name == name }
+
+
+    /**
+     * Creates folder for the task inside the `baseDir` directory.
+     * The directories of (sub)steps are created and parameter generators are initialized too.
+     *
+     *
+     * @param baseDir The directory in which the step folder will be created.
+     * @throws NoSuchFileException
+     * @throws java.nio.file.FileAlreadyExistsException
+     * @throws IllegalStateException
+     */
+    fun prepareTaskDirectory(baseDir: File)
 
 }
