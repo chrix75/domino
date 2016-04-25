@@ -1,6 +1,8 @@
 package domain.processing.entities.proxies
 
 
+import domain.global.generators.FilepathParameterGenerator
+import domain.processing.entities.objects.ParameterEntity
 import domain.processing.entities.objects.StepEntity
 import org.junit.Before
 import org.junit.Test
@@ -22,17 +24,41 @@ class StepProxyTest {
         val stepEntity = StepEntity("my step")
         stepEntity.id = 1
 
+        val parameter = ParameterEntity("aParam")
+        parameter.generator = FilepathParameterGenerator()
+        stepEntity.parameters = setOf(parameter)
+
+        val subStepEntity = StepEntity("a substep")
+        subStepEntity.id = 2
+
+
+
+        stepEntity.steps = setOf(subStepEntity)
+
         val step = StepProxy(stepEntity)
 
         val expectedDirectory = File("/tmp/step_my_step_1")
         if (expectedDirectory.exists())
             expectedDirectory.deleteRecursively()
 
+        val anotherDirectory = File("/tmp/step_a_substep_2")
+        if (anotherDirectory.exists())
+            anotherDirectory.deleteRecursively()
+
         assertFalse(expectedDirectory.exists())
+        assertFalse(anotherDirectory.exists())
 
         step.prepareStepDirectory(File("/tmp"))
         assertTrue(expectedDirectory.exists())
         assertTrue(expectedDirectory.isDirectory)
+
+
+        assertTrue(anotherDirectory.exists())
+        assertTrue(anotherDirectory.isDirectory)
+
+        val generatedFilepath = stepEntity.parameters?.first()?.generator?.generateFrom()
+        assertNotNull(generatedFilepath)
+        assertTrue(generatedFilepath!!.startsWith("/tmp/step_my_step_1/"))
     }
 
     @Test
