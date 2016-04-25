@@ -44,7 +44,9 @@ interface Step {
     fun parameterByName(name: String): Parameter? = parameters?.first { it.name == name }
 
     /**
-     * Creates folder for the task inside the `baseDir` directory.
+     * Creates folder for the step inside the `baseDir` directory.
+     * The directories of sub steps are created and parameter generators are initialized too.
+     *
      *
      * @param baseDir The directory in which the step folder will be created.
      * @throws NoSuchFileException
