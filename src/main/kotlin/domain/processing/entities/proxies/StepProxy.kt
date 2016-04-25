@@ -59,8 +59,8 @@ class StepProxy(val stepEntity: StepEntity) : Step {
         if (stepName == null || stepId == null)
             throw IllegalStateException("The system can't create a folder for a step with no name or no id.")
 
-        val stepDirName = stepName.replace("\\W", "_")
-        val stepPath = "${baseDir}${File.pathSeparatorChar}step_${stepDirName}_$stepId"
+        val stepDirName = stepName.replace(Regex("[^0-9a-zA-Z]"), "_")
+        val stepPath = "${baseDir}${File.separator}step_${stepDirName}_$stepId"
         val stepDir = File(stepPath)
 
         if (!stepDir.exists()) {
