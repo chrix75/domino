@@ -36,6 +36,10 @@ class TaskEntity(_name: String = "") : NamedEntity(_name), Validable<TaskEntity>
     @Relationship(type = "EXPOSES", direction = Relationship.OUTGOING)
     var outputs: Set<OutputEntity>? = null
 
+    @Property
+    var complete: Boolean = false
+
+
     override fun toString(): String {
         return "Task $id [$name] \"$description\""
     }

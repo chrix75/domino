@@ -32,6 +32,8 @@ class StepEntity(_name: String = "") : NamedEntity(_name), Validable<StepEntity>
     @Relationship(type = "PRODUCES", direction = Relationship.OUTGOING)
     var outputs: Set<OutputEntity>? = null
 
+    @Property
+    var complete: Boolean = false
 
     override fun toString(): String {
         return "[Step ID=$id Name=$name}"
