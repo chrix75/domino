@@ -33,6 +33,9 @@ class TaskEntity(_name: String = "") : NamedEntity(_name), Validable<TaskEntity>
     @Relationship(type = "HAS_STEP", direction = Relationship.OUTGOING)
     var steps: Set<StepEntity>? = null
 
+    @Relationship(type = "EXPOSES", direction = Relationship.OUTGOING)
+    var outputs: Set<OutputEntity>? = null
+
     override fun toString(): String {
         return "Task $id [$name] \"$description\""
     }
