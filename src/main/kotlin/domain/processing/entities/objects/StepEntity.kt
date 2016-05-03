@@ -56,5 +56,7 @@ class StepEntity(_name: String = "") : NamedEntity(_name), Validable<StepEntity>
         steps?.forEach {
             it.resetId()
         }
+
+        outputs?.forEach { it.resetId() }
     }
 }

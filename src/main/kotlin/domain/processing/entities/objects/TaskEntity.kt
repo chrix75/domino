@@ -56,6 +56,8 @@ class TaskEntity(_name: String = "") : NamedEntity(_name), Validable<TaskEntity>
         parameters?.forEach { it.resetId() }
 
         steps?.forEach { it.resetId() }
+
+        outputs?.forEach { it.resetId() }
     }
 
 }
